@@ -1,0 +1,17 @@
+{
+  "name": "nycda-users-app",
+  "version": "1.0.0",
+  "description": "Create a Node.js application that is the beginning of a user management system. Your users are all saved in a \"users.json\" file, and you can currently do the following: - search for users - add new users to your users file.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "fs": "0.0.1-security",
+    "morgan": "^1.7.0",
+    "pug": "^2.0.0-beta6"
+  }
+}
