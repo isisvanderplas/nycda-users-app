@@ -1,15 +1,15 @@
-const express = require('express');
-      pug = require('pug');
-      morgan = require('morgan');
+const express = require('express'),
+      morgan = require('morgan'),
+      bodyParser = require('body-parser'),
+      pug = require('pug'),
       fs = require('fs');
-      bodyparser = require('body-parser');
 
-var app = express();
-  userStore = JSON.parse(fs.readFileSync('users.json'));
+var app = express(),
+    userStore = JSON.parse(fs.readFileSync('users.json'));
 
 app.use(morgan('dev'));
 
-app.use(bodyparser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set('view engine', 'pug');
 
@@ -21,20 +21,14 @@ app.get('/search', (request, response) => {
   response.render('searchform');
 });
 
-app.get('/search/*', (request, response) => {
-  console.log(request.params[0]);
-  // make the actual search here!!:
-  var foundUser = findUser(request.params[0]);
-
-  response.render('search-result.pug', { user: foundUser });
+app.post('/search', (request, response) => {
+  response.redirect('/search/' + request.body.query);
 });
 
-app.post('/search', (request, response) => {
+app.get('/search/*', (request, response) => {
+  var results = searchUsers(request.params[0]);
 
-  console.log('search input was: ');
-  console.log(request.body);
-
-  response.redirect('/search/' + request.body.query);
+  response.render('search-result', { results: results });
 });
 
 
@@ -42,21 +36,27 @@ app.listen(3000, () => {
   console.log('Web Server is running on port 3000');
 });
 
-function findUser(input) {
+
+function searchUsers(input) {
+  var results = [];
+
   for (i = 0; i < userStore.length; i++) {
-    return(searchFirstName(input, userStore[i]) || searchLastName(input, userStore[i]));
+    if (searchFirstName(input, userStore[i]) || searchLastName(input, userStore[i])) {
+      results.push(userStore[i]);
+    }
   }
+
+  return results;
 }
 
+
 function searchFirstName(input, user) {
-  return(user.firstname.toLowerCase().includes(input.toLowerCase())); 
+  return user.firstname.toLowerCase().includes(input.toLowerCase());
 }
 
 function searchLastName(input, user) {
-  return (user.lastname.toLowerCase().includes(input.toLowerCase()));
+  return user.lastname.toLowerCase().includes(input.toLowerCase());
 }
-
-
 
 
 

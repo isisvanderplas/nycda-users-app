@@ -1,0 +1,13 @@
+extends application.pug
+
+block content
+  .container
+    h1 Search Results:
+
+    .card.card-block
+      if results
+        each user in results
+          h4(class="card-title")= user.firstname + " " + user.lastname
+          p(class="card-text")= "Email: " + user.email
+      else
+        h4 User is not found
