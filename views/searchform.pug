@@ -1,0 +1,11 @@
+extends application.pug
+
+block content
+  .container
+    .row
+      .col-xs-6.offset-xs-3
+        form(role='search' action="/search" method="POST")
+          .form-group
+            label(for="search") search
+            input(name="query" type="text" id="search" class="form-control" placeholder="search")
+            button.btn.btn-default(type='submit') Submit
