@@ -6,8 +6,8 @@ block content
 
     .card.card-block
       if results
-        each user in results
-          h4(class="card-title")= user.firstname + " " + user.lastname
-          p(class="card-text")= "Email: " + user.email
+        each item in results
+          h4(class="card-title")= item.firstname + " " + item.lastname
+          p(class="card-text")= "Email: " + item.email
       else
         h4 User is not found

@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set('view engine', 'pug');
 
+app.use(express.static('public'));
+
 app.get('/', (request, response) => {
   response.render('index', { users: userStore });
 });
@@ -24,6 +26,18 @@ app.get('/search', (request, response) => {
 app.post('/search', (request, response) => {
   response.redirect('/search/' + request.body.query);
 });
+
+app.get('/',(request, response) => {
+  response.render("custom.js");
+});
+
+// $(function(input) {
+//   var users = users.json;
+//   var input = "keypress";
+//   $(input).autocomplete
+//      source: users
+// });
+
 
 app.get('/search/*', (request, response) => {
   var results = searchUsers(request.params[0]);
