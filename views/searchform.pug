@@ -1,11 +1,13 @@
 extends application.pug
 
 block content
-  .container
+  .container-fluid
     .row
       .col-xs-6.offset-xs-3
         form(role='search' action="/search" method="POST")
           .form-group
-            label(for="search") search
-            input(name="query" type="text" id="search" class="form-control" placeholder="search")
-            button.btn.btn-default(type='submit') Submit
+
+            h4.text-xs-center Search Users
+            input.form-control(name="query" type="text" id="search_query" placeholder="search")
+
+            button.btn.btn-success(type='submit') Search
