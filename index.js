@@ -42,11 +42,23 @@ app.listen(3000, () => {
 function findUser(input) {
   // return some input
   for(i = 0; i < userStore.length; i++) {
-    if (userStore[i].firstname.toLowerCase().includes(input.toLowerCase())) {
+    if (includesFirstName(input) || includesLastName(input)) {
       return userStore[i];
     }
   }
-};
+}
+
+function includesFirstName(input) {
+  if (userStore[i].firstname.toLowerCase().includes(input.toLowerCase())){
+    return true;
+  }
+}
+
+function includesLastName(input) {
+  if (userStore[i].lastname.toLowerCase().includes(input.toLowerCase())){
+    return true;
+  }
+}
 
 
 
