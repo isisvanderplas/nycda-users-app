@@ -9,9 +9,7 @@ var app = express();
 
 var userStore = JSON.parse(fs.readFileSync('users.json'));
 
-app.use(bodyParser.urlencoded({ xtended: false }));
-
-console.log(userStore);
+app.use(bodyParser.urlencoded());
 
 app.set('view engine', 'pug');
 
@@ -30,15 +28,25 @@ app.post('/search', (req, res) => {
 
 app.get('/search/*', (req, res) => {
   console.log(req.params[0]);
-  res.send('search a user with the query ' + req.params[0]);
+  // make actual search here
+  var foundUser = findUser(req.params[0]);
+  res.render('search-result', { user : foundUser });
 });
+
 
 
 app.listen(3000, () => {
   console.log('app runing on port 3000');
 });
 
-
+function findUser(input) {
+  // return some input
+  for(i = 0; i < userStore.length; i++) {
+    if (userStore[i].firstname.toLowerCase().includes(input.toLowerCase())) {
+      return userStore[i];
+    }
+  }
+};
 
 
 
