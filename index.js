@@ -29,8 +29,8 @@ app.post('/search', (req, res) => {
 app.get('/search/*', (req, res) => {
   console.log(req.params[0]);
   // make actual search here
-  var foundUser = findUser(req.params[0]);
-  res.render('search-result', { user : foundUser });
+  var results = searchUsers(req.params[0]);
+  res.render('search-result', { results : results });
 });
 
 
@@ -39,27 +39,28 @@ app.listen(3000, () => {
   console.log('app runing on port 3000');
 });
 
-function findUser(input) {
-  // return some input
+function searchUsers(input) {
+  var results = [];
   for(i = 0; i < userStore.length; i++) {
-    if (includesFirstName(input) || includesLastName(input)) {
-      return userStore[i];
+    if (includesFirstName(input, userStore[i]) || includesLastName(input, userStore[i]) || includesEmail(input, userStore[i])) {
+      results.push(userStore[i]);
     }
   }
+  return results;
 }
 
-function includesFirstName(input) {
-  if (userStore[i].firstname.toLowerCase().includes(input.toLowerCase())){
-    return true;
+function includesFirstName(input, user) {
+    return user.firstname.toLowerCase().includes(input.toLowerCase());
   }
-}
 
-function includesLastName(input) {
-  if (userStore[i].lastname.toLowerCase().includes(input.toLowerCase())){
-    return true;
+
+function includesLastName(input, user) {
+    return user.lastname.toLowerCase().includes(input.toLowerCase());
   }
-}
 
+function includesEmail(input, user) {
+    return user.email.toLowerCase().includes(input.toLowerCase());
+}
 
 
 

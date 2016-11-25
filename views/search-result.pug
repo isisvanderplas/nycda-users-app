@@ -3,12 +3,13 @@ extends application.pug
 block content
 	.container
 		h1 search results:
-		.card.card-block
-			if user
-				h4(class="card-title")= user.firstname + " " + user.lastname
-				p(class="card-text")= user.email
-			else
-				h4 User is not found
+		if results
+			each user in results
+				.card.card-block
+					h4(class="card-title")= user.firstname + " " + user.lastname
+					p(class="card-text")= user.email
+		else
+			h4 User is not found
 
 
 
