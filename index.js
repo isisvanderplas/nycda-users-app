@@ -14,7 +14,24 @@ app.use(bodyParser.urlencoded());
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
-  res.render('index', { users: userStore });
+  res.render('users/index', { users: userStore });
+});
+
+app.get('/users/new', (req, res) => {
+  res.render('users/new');
+});
+
+app.post('/users', (req, res) => {
+  console.log(req.body);
+  userStore.push(req.body);
+  res.redirect('/');
+  fs.writeFile('users.json', JSON.stringify(userStore), (error, data) => {
+    if(error) {
+      console.log("ERROR OCCURED DURING WRITING TO users.json");
+      throw error;
+    }
+    console.log("SUCCESFULLY WRITTEN DATA TO users.json");
+  });
 });
 
 app.get('/search', (req, res) => {
